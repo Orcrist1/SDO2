@@ -73,13 +73,12 @@ bool openDoor(maze* pMaze, segments* pSegments, unsigned int index)
 
                     if(*pSegments->arraySegment[index].b == pMaze->array[i][j])
                     {
-                            printf("modifie la valeur %i en %i\n",pMaze->array[i][j], *pSegments->arraySegment[index].a);
                             pMaze->array[i][j] = *pSegments->arraySegment[index].a;
                             state = true;
                     }
                 }
             }
-             printf("modifie la valeur %i en %i\n", *pSegments->arraySegment[index].b, *pSegments->arraySegment[index].a);
+
             *pSegments->arraySegment[index].b = *pSegments->arraySegment[index].a;
             pSegments->arraySegment[index].visited = true;
         }

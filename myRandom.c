@@ -1,5 +1,4 @@
 #include "myRandom.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -35,6 +34,7 @@ bool destroyNumberRandom(randomNumber* number)
         free(number->pNumber);
         free(number);
         number = NULL;
+
         state = true;
     }
 
@@ -57,44 +57,3 @@ int getRandomNumber(randomNumber* number)
 
     return newNumber;
 }
-
-/*
-
-int myRandomBetween(int a, int b, unsigned int* numberExcluded,  unsigned int numberElements)
-{
-    unsigned int newNumber = 0;
-    bool bcontinue = true;
-
-    while(bcontinue != false)
-    {
-        newNumber = (rand() / (double)RAND_MAX) * ( b - a ) + a;
-
-        if(isNewNumber(newNumber, numberExcluded, numberElements))
-            bcontinue = false;
-        ex[i] = excluded[i];
-    }
-
-    return newNumber;
-}*/
-
-/*
-bool isNewNumber(unsigned int number, unsigned int* numberExcluded, unsigned int numberElements)
-{
-    bool newNumber = true;
-    if(numberExcluded != NULL)
-    {
-        if(numberElements > 0)
-        {
-            for(unsigned int i = 0; i < numberElements; i++)
-            {
-                if(numberExcluded[i] == number)
-                {
-                    i = numberElements;
-                    newNumber = false;
-                }
-            }
-        }
-    }
-    return newNumber;
-}
-*/

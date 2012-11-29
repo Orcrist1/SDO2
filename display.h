@@ -2,9 +2,9 @@
 #define DISPLAY_H_INCLUDED
 #include "maze.h"
 
-#define WIDTH 320
-#define HEIGHT 240
-#define THICKNESS_SEGMENT 3
+#define WIDTH 640
+#define HEIGHT 480
+#define THICKNESS_SEGMENT 1
 
 void display(maze* pMaze, segments* pSegments);
 void SDLPause(void);

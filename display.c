@@ -3,12 +3,6 @@
 #include <SDL/SDL.h>
 #include "display.h"
 
-/*
-allocSegmentGraphique()
-positionementElementsGraphique()
-
-*/
-
 void display(maze* pMaze, segments* pSegments)
 {
     SDL_Init(SDL_INIT_VIDEO);
@@ -16,8 +10,8 @@ void display(maze* pMaze, segments* pSegments)
 
     if(mainArea != NULL)
     {
-        int intervalX = WIDTH / pMaze->width;
-        int intervalY = HEIGHT / pMaze->width;
+        int intervalX = WIDTH / pMaze->width + THICKNESS_SEGMENT;
+        int intervalY = HEIGHT / pMaze->height + THICKNESS_SEGMENT;
 
         SDL_WM_SetCaption("Julien RAMAKERS - maze", NULL);
         SDL_FillRect(mainArea, NULL, SDL_MapRGB(mainArea->format, 0, 0, 0));
@@ -25,90 +19,60 @@ void display(maze* pMaze, segments* pSegments)
         SDL_Surface *surfaceSegmentH = SDL_CreateRGBSurface(SDL_HWSURFACE, intervalX, THICKNESS_SEGMENT, 32, 0, 0, 0, 0);
         SDL_Rect position;
 
-        //SEGMENTS HORIZONTAUX
-        int index = 0;
-        for(unsigned int j = 0; j < (pSegments->size / 2); j++)
+        int x = 1;
+        int y = 0;
+        for(unsigned int i = 1; i < pSegments->size;)
         {
-           /* position.x = 0;
-            position.y = intervalY * j;
-            SDL_FillRect(surfaceSegmentV, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-            SDL_BlitSurface(surfaceSegmentV,  NULL,  mainArea,  &position);*/
-
-            for(unsigned int i = 0; i < (pSegments->size / 2); i++)
+            if(x >= pMaze->width) // si X est arrivé à la fin de la ligne
             {
-
-                /*if((j - 1) >= 0 && !pSegments->arraySegment[index].visited)
-                {
-                    position.x = intervalX * i - THICKNESS_SEGMENT;
-                    position.y = intervalY * j;
-                    SDL_FillRect(surfaceSegmentH, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-                    SDL_BlitSurface(surfaceSegmentH,  NULL,  mainArea, &position);
-                    printf("index : %d\n", index);
-                }
-                index++;
-                if(index >= pSegments->size) break;
-
-                if((i - 1) >= 0 && !pSegments->arraySegment[index].visited)
-                {
-                    position.x = intervalX * i;
-                    position.y = intervalY * j - THICKNESS_SEGMENT;
-                    SDL_FillRect(surfaceSegmentV, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-                    SDL_BlitSurface(surfaceSegmentV,  NULL,  mainArea, &position);
-                    printf("index : %d\n", index);
-                }
-                index++;
-                if(index >= pSegments->size) break;*/
-
-                if((j + 1) < pMaze->width + 2  && !pSegments->arraySegment[index].visited)
-                {
-                    position.x = intervalX * i;
-                    position.y = intervalY * (j + 1);
-                    SDL_FillRect(surfaceSegmentH, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-                    SDL_BlitSurface(surfaceSegmentH,  NULL,  mainArea, &position);
-                    SDL_Flip(mainArea);
-                }
-                index++;
-
-                if((i + 1) < pMaze->height + 2 && !pSegments->arraySegment[index].visited)
-                {
-                    position.x = intervalX * (i + 1);
-                    position.y =  intervalY * j;
-                    SDL_FillRect(surfaceSegmentV, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-                    SDL_BlitSurface(surfaceSegmentV,  NULL,  mainArea, &position);
-                    SDL_Flip(mainArea);
-                }
-                index++;
+                y++;
+                x = 1;
+                if(pMaze->width != (y + 1)) i += 1; // si il est different à la derniere ligne
             }
 
-        /*    position.x = intervalX * pMaze->width - THICKNESS_SEGMENT;
-            position.y = intervalY * j;
-            SDL_FillRect(surfaceSegmentV, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-            SDL_BlitSurface(surfaceSegmentV,  NULL,  mainArea, &position);*/
+            if(!pSegments->arraySegment[i].visited)
+            {
+                    position.x = intervalX * x;
+                    position.y = intervalY * y;
+                    SDL_FillRect(surfaceSegmentV, NULL, SDL_MapRGB(mainArea->format,255,0,0));
+                    SDL_BlitSurface(surfaceSegmentV,  NULL,  mainArea, &position);
+            }
+            x++;
+
+            if(pMaze->width == (y + 1)) i += 1;   // si il est égal à la derniere ligne
+            else i += 2;
         }
 
-        //SEGMENTS VERTICAUX
-        /*
-       for(int j = 0; j < pMaze->width; j++)
+        x = 0;
+        y = 0;
+        for(unsigned int i = 0; i < pSegments->size; )
         {
-            position.x = intervalY * j;
-            position.y = 0;
-            SDL_FillRect(surfaceSegmentH, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-            SDL_BlitSurface(surfaceSegmentH,  NULL,  mainArea,  &position);
-            for(int i = 0; i < pMaze->width; i++)
+            if(x >= pMaze->width) // si X est arrivé à la fin de la ligne
             {
-                position.x = intervalX * i;
-                position.y = intervalY * j - THICKNESS_SEGMENT;
-                SDL_FillRect(surfaceSegmentH, NULL, SDL_MapRGB(mainArea->format,255,0,0));
-                SDL_BlitSurface(surfaceSegmentH,  NULL,  mainArea, &position);
+                y++;
+                x = 0;
+                if(pMaze->width != (y + 1)) i += 1; // si il est different à la derniere ligne
+                else break;
             }
-        }*/
+
+            if(!pSegments->arraySegment[i].visited)
+            {
+                    position.x = intervalX * x;
+                    position.y = intervalY * (y + 1);
+                    SDL_FillRect(surfaceSegmentH, NULL, SDL_MapRGB(mainArea->format,255,0,0));
+                    SDL_BlitSurface(surfaceSegmentH,  NULL,  mainArea, &position);
+            }
+            x++;
+
+         if(x < pMaze->width) i += 2;
+        }
 
         SDL_Flip(mainArea);
         SDL_FreeSurface(surfaceSegmentH);
         SDL_FreeSurface(surfaceSegmentV);
         SDLPause();
-    }
-    SDL_Quit();
+        SDL_Quit();
+        }
 }
 
 
@@ -117,7 +81,7 @@ void SDLPause(void)
     int continuer = 1;
     SDL_Event event;
 
-    while (continuer)
+    while(continuer)
     {
         SDL_WaitEvent(&event);
         switch(event.type)
@@ -127,3 +91,4 @@ void SDLPause(void)
         }
     }
 }
+

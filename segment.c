@@ -43,18 +43,18 @@ segments* createSegments(maze* pMaze)
                             e++;
                         }
 */
-                        if((j+1) < pMaze->width)
-                        {
-                            pSegments->arraySegment[e].a = &pMaze->array[i][j];    // [5]
-                            pSegments->arraySegment[e].b = &pMaze->array[i][j+1];  // [6]
-                            pSegments->arraySegment[e].visited = false;
-                            e++;
-                        }
-
                         if((i+1) < pMaze->height)
                         {
                             pSegments->arraySegment[e].a = &pMaze->array[i][j];    // [5]
                             pSegments->arraySegment[e].b = &pMaze->array[i+1][j];  // [8]
+                            pSegments->arraySegment[e].visited = false;
+                            e++;
+                        }
+
+                        if((j+1) < pMaze->width)
+                        {
+                            pSegments->arraySegment[e].a = &pMaze->array[i][j];    // [5]
+                            pSegments->arraySegment[e].b = &pMaze->array[i][j+1];  // [6]
                             pSegments->arraySegment[e].visited = false;
                             e++;
                         }

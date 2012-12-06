@@ -9,4 +9,6 @@
 void display(maze* pMaze, segments* pSegments);
 void SDLPause(void);
 
+void displayV(maze* pMaze, segments* pSegments);
+void displayH(maze* pMaze, segments* pSegments);
 #endif // DISPLAY_H_INCLUDED

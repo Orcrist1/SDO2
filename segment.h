@@ -18,7 +18,11 @@ struct segments_t
 };
 
 segments* createSegments(maze* pMaze);
-bool initSegment(maze* pMaze, segment* pSegment, int i, int j);
+
+//static void initSegments(maze* pMaze, segments* pSegments);
+//Etant une fonction statique, il ne peut exister de prototype !
+
+
 bool destroySegments(segments* pSegments);
 
 

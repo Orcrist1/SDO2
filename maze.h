@@ -12,9 +12,8 @@ struct maze_t
     int width;
 };
 
-maze* createMaze(const unsigned int height, const unsigned int width);
+maze* createMaze(unsigned int height, unsigned int width, int startValue);
 bool destroyMaze(maze* pMaze);
-bool openDoor(maze* pMaze, segments* pSegments, unsigned int index);
-void fillMaze(maze* pMaze);
+bool openDoor(maze* pMaze, segments* pSegments, int index);
 
 #endif // MAZE_H_INCLUDED

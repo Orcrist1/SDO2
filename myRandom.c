@@ -20,6 +20,11 @@ randomNumber* createNumberRandom(unsigned int a, unsigned int b)
             }
             number->size = b - a;
         }
+        else
+        {
+            free(number);
+            number = NULL;
+        }
     }
 
     return number;
